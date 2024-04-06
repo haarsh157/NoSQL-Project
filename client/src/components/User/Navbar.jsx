@@ -65,7 +65,7 @@ const Navbar = (props) => {
         </div>
         <div className="md:flex hidden items-center space-x-4">
           <img src={userf} alt="userf" />
-          {!localStorage.getItem("token") ? (
+          {/* {!localStorage.getItem("token") ? ( */}
             <Link
               to="/login"
               className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
@@ -75,14 +75,14 @@ const Navbar = (props) => {
             >
               Login
             </Link>
-          ) : (
+          {/* ) : ( */}
             <button
               className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
               onClick={handleLogout}
             >
               Logout
             </button>
-          )}
+          {/* )} */}
           {/* <Link
             to="/signup"
             className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"

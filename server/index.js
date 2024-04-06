@@ -10,6 +10,15 @@ const port = 4000;
 app.use(cors())
 app.use(express.json());
 
+app.use(
+  cors({  
+    origin: "http://localhost:5173",
+    methods: "GET,POST,PUT,DELETE",
+    credentials: true,
+  })
+);
+app.use(express.json());
+
 app.use("/api/auth", require("./routes/auth"));
 
 app.get("/", (req, res) => {
