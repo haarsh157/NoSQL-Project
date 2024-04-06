@@ -1,0 +1,17 @@
+
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:wght@600&family=Lobster&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.header
+{
+    position: relative;
+    animation-name: xyz;
+    animation-duration: 1s;
+}
+@keyframes xyz
+{
+    0%{opacity: 0};
+    100%{opacity: 1};
+}
