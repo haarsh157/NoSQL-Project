@@ -33,13 +33,11 @@ const GuestRoomBook = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      await axios.post("http://localhost:5000/user/guestroombook", newRoom);
-      console.log(newRoom);
-      navigate("/");
-    } catch (err) {
-      console.log(err);
-    }
+    axios.post("http://localhost:4000/api/user/guestroombook", newRoom)
+    .then(res => {
+      alert(res.data)
+      navigate("/");})
+    .catch(err => console.log("Error",err));
   };
 
   return (
@@ -132,8 +130,9 @@ const GuestRoomBook = () => {
                         width: "70%",
                       }}
                       onChange={handleChange}
+                      defaultValue={'DEFAULT'}
                     >
-                      <option value="" disabled hidden>
+                      <option value="DEFAULT" disabled>
                         Select your gender
                       </option>
                       <option value="male">Male</option>
@@ -152,6 +151,7 @@ const GuestRoomBook = () => {
                     </label>
                     <input
                       type="text"
+                      name="Relationship"
                       style={{ borderRadius: "10px", width: "70%" }}
                       className="text-black p-1"
                       onChange={handleChange}
@@ -167,6 +167,7 @@ const GuestRoomBook = () => {
                     </label>
                     <input
                       type="text"
+                      name="NumberOfPersons"
                       style={{ borderRadius: "10px", width: "70%" }}
                       className="text-black p-1"
                       onChange={handleChange}
@@ -181,7 +182,7 @@ const GuestRoomBook = () => {
                       Permanent Address:
                     </label>
                     <textarea
-                      name="permAdd"
+                      name="PermanentAddress"
                       id="permAdd"
                       rows="4"
                       className="w-[70%] text-black"
@@ -198,7 +199,7 @@ const GuestRoomBook = () => {
                       Contact Address:
                     </label>
                     <textarea
-                      name="contAdd"
+                      name="ContactAddress"
                       id="contAdd"
                       rows="4"
                       className="w-[70%] text-black"
@@ -216,6 +217,7 @@ const GuestRoomBook = () => {
                     </label>
                     <input
                       type="text"
+                      name="PhoneNo"
                       style={{ borderRadius: "10px", width: "70%" }}
                       className="text-black p-1"
                       onChange={handleChange}
@@ -231,6 +233,7 @@ const GuestRoomBook = () => {
                     </label>
                     <input
                       type="text"
+                      name="EmailId"
                       style={{ borderRadius: "10px", width: "70%" }}
                       className="text-black p-1"
                       onChange={handleChange}
