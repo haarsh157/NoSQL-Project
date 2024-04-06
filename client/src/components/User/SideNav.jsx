@@ -11,7 +11,7 @@ const SideNav = (props) => {
   return (
     <>
       {/* sidenav */}
-      {localStorage.getItem("token") ? (
+      {/* {localStorage.getItem("token") ? ( */}
         <div
         id="navi"
         className={`bg-white text-gray-800 md:w-[15vw] md:block fixed w-[20vw] h-[100%] ${
@@ -136,9 +136,9 @@ const SideNav = (props) => {
           </ul>
         </nav>
       </div>
-      ):(
+      {/* ):(
         <div></div>
-      )}
+      )} */}
       
     </>
   );

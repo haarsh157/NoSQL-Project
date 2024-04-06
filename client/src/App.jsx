@@ -78,13 +78,16 @@ function App() {
               minHeight: "calc(100vh-80px)",
             }}
           >
-            {currentUserType === "student" ? (
+            {/* {currentUserType === "student" ? (
               <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
             ) : currentUserType === "admin" ? (
               <SideNavAdmin isOpen={!isOp} setIsOp={setIsOp} />
             ) : (
               <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
-            )}
+            )} */}
+            <SideNavUser 
+            isOpen={!isOp} setIsOp={setIsOp} 
+            />
 
             <Routes>
               <Route

@@ -5,11 +5,11 @@ import axios from "axios";
 
 const MyComplaints = () => {
   let navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")) {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   const [complaints, setComplaints] = useState([]);
 

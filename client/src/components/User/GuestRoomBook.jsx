@@ -7,11 +7,11 @@ import axios from "axios";
 
 const GuestRoomBook = () => {
   let navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!localStorage.getItem("token")) {
+  //     navigate("/login");
+  //   }
+  // }, []);
 
   const [newRoom, setNewRoom] = useState({
     RoomNo: "",
