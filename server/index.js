@@ -34,6 +34,7 @@ app.use(function (req, res, next) {
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", require("./routes/filecomplaint"));
 app.use("/api/user", require("./routes/guestroom"))
+app.use("/api/user", require("./routes/applyLeave")) ;
 app.use("/api/admin/", require("./routes/admin"))
 
 app.get("/", (req, res) => {

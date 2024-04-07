@@ -1,18 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import homeimg from "../../assets/svg/Home-white.png";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const ApplyLeave = () => {
-  let navigate = useNavigate();
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
-      navigate("/login");
-    }
-  }, []);
-
+  const navigate = useNavigate();
   const [newLeave, setNewLeave] = useState({
     Name: "",
     Roll_No: "",
@@ -26,8 +20,8 @@ const ApplyLeave = () => {
     Residential_Address: "",
     Contact_No: "",
     Contact_No_of_Parents: "",
+    Agreement: "",
   });
-  // console.log(newLeave)
 
   const handleChange = (e) => {
     setNewLeave((prev) => ({ ...prev, [e.target.name]: e.target.value }));
@@ -36,11 +30,40 @@ const ApplyLeave = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/user/leaveapplication", newLeave);
-      console.log(newLeave);
-      navigate("/");
-    } catch (err) {
-      console.log(err);
+      const response = await axios.post(
+        "http://localhost:4000/api/user/applyLeave",
+        {
+          newLeave,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
+      console.log(response.data);
+
+      if (response.data.success) {
+        alert("Applied for leave successfully!");
+        navigate("/applyforleave");
+      } else {
+        alert("Leave applied already");
+      }
+    } catch (error) {
+      console.error("Error applying for leave:", error);
+      // Handle specific error scenarios based on AxiosError properties
+      if (error.response) {
+        // Server responded with a non-success status code
+        console.log("Server responded with:", error.response.data);
+        alert("Failed to apply for leave. Server responded with an error.");
+      } else if (error.request) {
+        // Request was made but no response was received
+        console.log("No response received:", error.request);
+        alert("Failed to apply for leave. No response received from server.");
+      } else {
+        // Other errors
+        console.log("Error details:", error.message);
+        alert("Failed to apply for leave. An unexpected error occurred.");
+      }
     }
   };
 
@@ -83,9 +106,8 @@ const ApplyLeave = () => {
                 borderBottomRightRadius: "10px",
               }}
             >
-              <div className="main-content text-white p-2 text-2xl  !!!!!!!!!!!!!max-sm:{flex flex-col justify-center }">
+              <div className="main-content text-white p-2 text-2xl}">
                 <form onSubmit={handleSubmit} method="post">
-                  <p className="py-3">Application No.: XYZ123</p>
                   <div className="n-rlno-rmno py-2 flex justify-between flex-wrap">
                     <div className="name my-5">
                       <label htmlFor="Name">Name: </label>
@@ -249,7 +271,9 @@ const ApplyLeave = () => {
                     </div>
 
                     <div className="contnopa max-md:my-6 ">
-                      <label htmlFor="Contact_No_of_Parents">Contact No. of Parents: </label>
+                      <label htmlFor="Contact_No_of_Parents">
+                        Contact No. of Parents:{" "}
+                      </label>
                       <input
                         type="text"
                         name="Contact_No_of_Parents"
@@ -264,14 +288,14 @@ const ApplyLeave = () => {
                   <div className="decla ">
                     <input
                       type="checkbox"
-                      id="agreement"
-                      name="agreement"
-                      value="agreement"
+                      id="Agreement"
+                      name="Agreement"
+                      value="Agreement"
                       required
                       style={{ width: "25px", height: "25px" }}
                       onChange={handleChange}
                     />
-                    <label htmlFor="agreement">
+                    <label htmlFor="Agreement">
                       {" "}
                       Declaration : Yes, I agree that I have taken the consent
                       of my parents for this leave and I will be responsible for
