@@ -14,8 +14,8 @@ const Navbar = (props) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
-    // localStorage.removeItem("token");
-    // navigate("/login");
+    localStorage.removeItem("token");
+    navigate("/login");
     window.location.reload();
   };
 
@@ -65,33 +65,35 @@ const Navbar = (props) => {
         </div>
         <div className="md:flex hidden items-center space-x-4">
           <img src={userf} alt="userf" />
-          {/* {!localStorage.getItem("token") ? ( */}
-            <Link
-              to="/login"
-              className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
-              style={{
-                fontFamily: "'EB Garamond', serif",
-              }}
-            >
-              Login
-            </Link>
-          {/* ) : ( */}
+          {!localStorage.getItem("token") ? (
+            <>
+              <Link
+                to="/login"
+                className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
+                style={{
+                  fontFamily: "'EB Garamond', serif",
+                }}
+              >
+                Login
+              </Link>
+              <Link
+                to="/signup"
+                className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
+                style={{
+                  fontFamily: "'EB Garamond', serif",
+                }}
+              >
+                Signup
+              </Link>
+            </>
+          ) : (
             <button
               className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
               onClick={handleLogout}
             >
               Logout
             </button>
-          {/* )} */}
-          {/* <Link
-            to="/signup"
-            className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
-            style={{
-              fontFamily: "'EB Garamond', serif",
-            }}
-          >
-            Signup
-          </Link> */}
+          )}
         </div>
       </nav>
     </>

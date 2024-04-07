@@ -5,19 +5,21 @@ import axios from "axios";
 
 const MyComplaints = () => {
   let navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   const [complaints, setComplaints] = useState([]);
 
   useEffect(() => {
     const fetchAllComplaints = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/user/mycomplaints");
-        console.log(res.data);
+        const res = await axios.get(
+          "http://localhost:4000/api/user/getcomplaints"
+        );
+        // console.log(res.data);
         setComplaints(res.data);
       } catch (error) {
         console.error("Error fetching complaints:", error);
@@ -25,25 +27,29 @@ const MyComplaints = () => {
     };
     fetchAllComplaints();
   }, []);
+  console.log(complaints);
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete("http://localhost:5000/user/delcomplaint/" + id);
+      await axios.delete("http://localhost:4000/api/user/delcomplaint/" + id);
       window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
 
-
   const handleCheckoff = async (id) => {
     try {
-      await axios.get("http://localhost:5000/user/checkoffcomplaint/" + id);
+      await axios.get("http://localhost:4000/api/user/checkoffcomplaint/" + id);
       window.location.reload();
     } catch (error) {
       console.log(error);
     }
     setCheckOffcolor("bg-green-500");
+  };
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString();
   };
 
   return (
@@ -61,17 +67,17 @@ const MyComplaints = () => {
         <div className="complaints lg:p-6 p-2 text-black lg:text-2xl flex items-center flex-col">
           {complaints.map((complaint) => (
             <div
-              key={complaint.c_id}
+              key={complaint.complaint_id}
               className="comp lg:w-[90%] w-[90%] bg-slate-300 rounded-[30px] lg:p-8 lg:px-14 p-4 px-7 py-4 my-3 flex justify-between items-center md:flex-row flex-col"
             >
               <div className="md:w-[60%] w-[100%] flex items-center ">
                 <div className="flex items-center justify-center flex-col lg:px-10 px-6">
-                  <p className="">Complaint ID:{complaint.c_id}</p>
+                  <p className="">Complaint ID:{complaint.complaint_id}</p>
                   <p className="">Complaint Type:{complaint.type}</p>
                 </div>
                 <div className="flex items-center justify-center flex-col lg:px-10 px-6">
-                  <p className="">DD/MM/YYYY</p>
-                  <p className="">--:--:--</p>
+                  <p className="">Date: {formatDate(complaint.date)}</p> 
+                  {/* <p className="">--:--:--</p> */}
                 </div>
                 <div className="flex items-center justify-center flex-col lg:px-10 px-6">
                   <p className="">{complaint.description}</p>
@@ -91,9 +97,7 @@ const MyComplaints = () => {
                   } flex justify-center items-center text-white rounded-3xl px-8 py-1 my-1 mx-6`}
                 >
                   <span>
-                    {complaint.stud_flag === 1
-                      ? "DONE"
-                      : "Check Off"}
+                    {complaint.stud_flag === 1 ? "DONE" : "Check Off"}
                   </span>
                 </button>
               </div>

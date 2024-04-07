@@ -8,11 +8,17 @@ import mcomp from "../../assets/svg/Folder_file_alt_diuotone_fill.svg";
 
 const SideNav = (props) => {
   // console.log(props.isOpen)
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+    window.location.reload();
+  };
+
   return (
     <>
       {/* sidenav */}
-      {/* {localStorage.getItem("token") ? ( */}
-        <div
+      <div
         id="navi"
         className={`bg-white text-gray-800 md:w-[15vw] md:block fixed w-[20vw] h-[100%] ${
           props.isOpen
@@ -22,124 +28,139 @@ const SideNav = (props) => {
       >
         <nav>
           <ul className="space-y-2">
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/login"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className=" md:hidden flex items-center justify-center p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center justify-center">
-                    <span className=" px-4 font-bold text-xl">Login</span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/signup"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className=" md:hidden flex items-center justify-center p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center justify-center">
-                    <span className=" px-4 font-bold text-xl">Signup</span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className="flex items-center justify-between p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center">
-                    <img src={homeimg} alt="home" />
-                    <span className=" px-4 font-bold text-xl">Home</span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/filecomplaint"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className="flex items-center justify-between p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center">
-                    <img src={comp} alt="comp" />
-                    <span className=" px-4 font-bold text-xl">
-                      File a complaint
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/guestroombook"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className="flex items-center justify-between p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center">
-                    <img src={guest} alt="guest" />
-                    <span className=" px-4 font-bold text-xl">
-                      Guest Room Booking
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/applyforleave"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className="flex items-center justify-between p-4 transition-all duration-800 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center">
-                    <img src={leaveico} alt="leaveico" />
-                    <span className=" px-4 font-bold text-xl">
-                      Apply for leave
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </li>
-            <li className="opcion-con-desplegable">
-              <Link
-                to="/mycomplaints"
-                onClick={() => {
-                  props.setIsOp(props.isOpen);
-                }}
-              >
-                <div className="flex items-center justify-between p-4 transition-all duration-800 hover:bg-gray-300 hover:text-black text-xl">
-                  <div className="flex items-center">
-                    <img src={mcomp} alt="mcomp" />
-                    <span className=" px-4 font-bold text-xl">
-                      My Complaints
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            </li>
+            {!localStorage.getItem("token") ? (
+              <>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/login"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className=" md:hidden flex items-center justify-center p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center justify-center">
+                        <span className=" px-4 font-bold text-xl">Login</span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/signup"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className=" md:hidden flex items-center justify-center p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center justify-center">
+                        <span className=" px-4 font-bold text-xl">Signup</span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <li className="opcion-con-desplegable">
+                {/* <button
+                    className="text-white text-2xl rounded-2xl px-3 py-[2px] bg-blue-900 hover:bg-blue-700 transition-all duration-300"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button> */}
+              </li>
+            )}
+            {localStorage.getItem("token") ? (
+              <>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className="flex items-center justify-between p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center">
+                        <img src={homeimg} alt="home" />
+                        <span className=" px-4 font-bold text-xl">Home</span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/filecomplaint"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className="flex items-center justify-between p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center">
+                        <img src={comp} alt="comp" />
+                        <span className=" px-4 font-bold text-xl">
+                          File a complaint
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/guestroombook"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className="flex items-center justify-between p-4 transition-all duration-600 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center">
+                        <img src={guest} alt="guest" />
+                        <span className=" px-4 font-bold text-xl">
+                          Guest Room Booking
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/applyforleave"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className="flex items-center justify-between p-4 transition-all duration-800 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center">
+                        <img src={leaveico} alt="leaveico" />
+                        <span className=" px-4 font-bold text-xl">
+                          Apply for leave
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+                <li className="opcion-con-desplegable">
+                  <Link
+                    to="/mycomplaints"
+                    onClick={() => {
+                      props.setIsOp(props.isOpen);
+                    }}
+                  >
+                    <div className="flex items-center justify-between p-4 transition-all duration-800 hover:bg-gray-300 hover:text-black text-xl">
+                      <div className="flex items-center">
+                        <img src={mcomp} alt="mcomp" />
+                        <span className=" px-4 font-bold text-xl">
+                          My Complaints
+                        </span>
+                      </div>
+                    </div>
+                  </Link>
+                </li>
+              </>
+            ) : (
+              <div></div>
+            )}
           </ul>
         </nav>
       </div>
-      {/* ):(
-        <div></div>
-      )} */}
-      
     </>
   );
 };

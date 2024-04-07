@@ -7,11 +7,11 @@ import axios from "axios";
 
 const ApplyLeave = () => {
   let navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   const [newLeave, setNewLeave] = useState({
     Name: "",

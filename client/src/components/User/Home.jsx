@@ -6,12 +6,12 @@ import mcomp from "../../assets/svg/Folder_file_alt_diuotone_fill(1).svg";
 import { Link, useNavigate } from "react-router-dom";
 
 const Home = () => {
-  // let navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   const [shadow1, setShadow1] = useState();
   const [shadow2, setShadow2] = useState();

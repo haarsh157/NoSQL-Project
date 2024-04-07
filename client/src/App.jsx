@@ -21,7 +21,7 @@ import StudentRecords from "./Admin/StudentRecords";
 const USER_TYPES = {
   PUBLIC_USER: "public",
   NORMAL_USER: "student",
-  ADMIN_USER: "Admin",
+  ADMIN_USER: "caretaker",
 };
 
 function App() {
@@ -40,7 +40,7 @@ function App() {
   // }, []);
 
   const [currentUserType, setCurrentUserType] = useState(
-    localStorage.getItem("token")
+    localStorage.getItem("role")
   );
 
   const handleRoleChange = (role) => {
@@ -48,23 +48,22 @@ function App() {
   };
   // console.log(currentUserType);
 
-  console.log(currentUserType);
-
   const UserElement = ({ children }) => {
     if (currentUserType === "student") {
       return <>{children}</>;
-    } else {
+    } else if (!currentUserType) {
       <div>error</div>;
     }
   };
 
   const AdminElement = ({ children }) => {
-    if (currentUserType === "admin") {
+    if (currentUserType === "caretaker") {
       return <>{children}</>;
     } else {
       <div>error</div>;
     }
   };
+  console.log(currentUserType);
 
   return (
     <>
@@ -78,16 +77,13 @@ function App() {
               minHeight: "calc(100vh-80px)",
             }}
           >
+            <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
             {/* {currentUserType === "student" ? (
-              <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
-            ) : currentUserType === "admin" ? (
+            ) : currentUserType === "caretaker" ? (
               <SideNavAdmin isOpen={!isOp} setIsOp={setIsOp} />
             ) : (
               <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
             )} */}
-            <SideNavUser 
-            isOpen={!isOp} setIsOp={setIsOp} 
-            />
 
             <Routes>
               <Route

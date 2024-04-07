@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import bgImg from "../../assets/images.jpg";
+import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
   const [credentials, setCredentials] = useState({
@@ -7,12 +8,17 @@ const Signup = () => {
     email: "",
     password: "",
     cpassword: "",
+    rollno: "", // Added rollno field
   });
+  const navigate = useNavigate();
+
+
+  const [role, setRole] = useState("student");
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const { name, email, password } = credentials;
-    const response = await fetch("http://localhost:5000/api/auth/createuser", {
+    const { name, email, password, rollno } = credentials;
+    const response = await fetch("http://localhost:4000/api/auth/createuser", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,6 +27,8 @@ const Signup = () => {
         name,
         email,
         password,
+        rollno,
+        role,
       }),
     });
     const json = await response.json();
@@ -30,7 +38,10 @@ const Signup = () => {
       localStorage.setItem("token", json.authtoken);
       alert("Account created successfully!");
       // Assuming you have imported navigate from your routing library
-      navigate("/login");
+
+      localStorage.setItem("token", res.data.authToken);
+      localStorage.setItem("role", credentials.role);
+      navigate("/");
     } else {
       alert("Email already exists");
     }
@@ -38,6 +49,10 @@ const Signup = () => {
 
   const onChange = (e) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+
+  const handleRoleChange = (e) => {
+    setRole(e.target.value);
   };
 
   return (
@@ -56,15 +71,15 @@ const Signup = () => {
               alt=""
               srcSet=""
             />
-            <h1 className="mb-2 text-3xl">SignUp for an account</h1>
+            <h1 className="mb-2 text-3xl">Sign Up for an account</h1>
             <span className="text-gray-300">Enter Details</span>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text-lg">
               <input
-                className=" w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                className="w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                 id="name"
-                type="name"
+                type="text"
                 name="name"
                 onChange={onChange}
                 value={credentials.name}
@@ -73,7 +88,7 @@ const Signup = () => {
             </div>
             <div className="mb-4 text-lg">
               <input
-                className=" w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                className="w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                 id="email"
                 type="email"
                 name="email"
@@ -83,11 +98,24 @@ const Signup = () => {
               />
             </div>
 
+            {/* Field for rollno */}
             <div className="mb-4 text-lg">
               <input
-                className=" w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                className="w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                id="rollno"
+                type="text"
+                name="rollno"
+                onChange={onChange}
+                value={credentials.rollno}
+                placeholder="Roll Number"
+              />
+            </div>
+
+            <div className="mb-4 text-lg">
+              <input
+                className="w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                 id="password"
-                type="Password"
+                type="password"
                 name="password"
                 onChange={onChange}
                 value={credentials.password}
@@ -96,14 +124,25 @@ const Signup = () => {
             </div>
             <div className="mb-4 text-lg">
               <input
-                className=" w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                className="w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
                 id="cpassword"
-                type="Password"
+                type="password"
                 name="cpassword"
                 onChange={onChange}
                 value={credentials.cpassword}
                 placeholder="Confirm Password"
               />
+            </div>
+            {/* Field for selecting role */}
+            <div className="mb-4 text-lg">
+              <select
+                className="w-[100%] rounded-3xl border-none bg-blue-700 bg-opacity-50 px-6 py-2 text-center text-inherit placeholder-slate-200 shadow-lg outline-none backdrop-blur-md"
+                value={role}
+                onChange={handleRoleChange}
+              >
+                <option value="student">Student</option>
+                <option value="caretaker">Caretaker</option>
+              </select>
             </div>
             <div className="mt-8 flex justify-center text-lg text-black">
               <button

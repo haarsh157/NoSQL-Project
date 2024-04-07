@@ -7,29 +7,31 @@ import axios from "axios";
 
 const FileComplaint = () => {
   let navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/login");
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
 
   const [complaint, setComplaint] = useState({
     type: "",
     description: "",
     image: "",
-    roll_no: "",
+    rollno: "",
   });
-  console.log(complaint)
 
   const handleChange = (e) => {
     setComplaint((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-
+  
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post("http://localhost:5000/user/newcomplaint", complaint);
-      console.log(complaint);
+      await axios.post(
+        "http://localhost:4000/api/user/newcomplaint",
+        complaint
+      );
+      // console.log(complaint);
       navigate("/mycomplaints");
     } catch (err) {
       console.log(err);
@@ -103,11 +105,11 @@ const FileComplaint = () => {
                   </select>
                 </div>
                 <div className="w-[50%]">
-                  <label htmlFor="roll_no">Roll No. :</label>
+                  <label htmlFor="rollno">Roll No. :</label>
                   <input
                     type="text"
-                    name="roll_no"
-                    id="roll_no"
+                    name="rollno"
+                    id="rollno"
                     placeholder="ex:  A-403"
                     style={{
                       marginLeft: "0.5vw",

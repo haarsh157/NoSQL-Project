@@ -1,15 +1,19 @@
+// In models/Complaint.js
+
 const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 const ComplaintSchema = new Schema({
-  category: {
+  complaint_id: {
+    type: Number,
+  },
+  type: {
     type: String,
     required: true,
   },
   rollno: {
     type: String,
-    required: true,
-    unique: true,
+    required: false, // Mark rollno as not required
   },
   description: {
     type: String,
@@ -23,8 +27,12 @@ const ComplaintSchema = new Schema({
     type: Date,
     default: Date.now,
   },
+  status: {
+    type: String,
+    default: "Pending",
+    enum: ["Pending", "Resolved", "Rejected"]
+  }
 });
 
-const Complaint = mongoose.model("Complaint", ComplaintSchema); // Changed the model name to singular and capitalized
-Complaint.createIndexes();
+const Complaint = mongoose.model("Complaint", ComplaintSchema);
 module.exports = Complaint;

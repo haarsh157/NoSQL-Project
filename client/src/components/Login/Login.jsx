@@ -5,34 +5,36 @@ import { useNavigate } from "react-router-dom";
 
 const Login = (props) => {
   const [credentials, setCredentials] = useState({
-    user_id: "",
-    pass: "",
-    role: "", // Added role in the state
+    email: "",
+    password: "",
+    role: "",
   });
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
-    // e.preventDefault();
-    // axios
-    //   .post("http://localhost:5000/login", credentials)
-    //   .then((res) => {
-    //     if (res.data.Status === "Success") {
-    //       props.handleRoleChange(credentials.role);
-    //       if (credentials.role === "student") {
-    //         navigate("/");
-    //       } else {
-    //         navigate("/admin");
-    //       }
-    //       localStorage.setItem("token", res.data.authToken);
-    //       // window.location.reload();
-    //       console.log("Role after login:", credentials.role); // Log the role
-    //     } else {
-    //       alert("error");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.log(err);
-    //   });
+    e.preventDefault();
+    axios
+      .post("http://localhost:4000/api/auth/login", credentials)
+      .then((res) => {
+        if (res.data.success) {
+          props.handleRoleChange(credentials.role);
+          if (credentials.role === "student") {
+            navigate("/");
+          } else if (credentials.role === "caretaker") {
+            // Assuming admin is the caretaker
+            navigate("/admin");
+          }
+          localStorage.setItem("token", res.data.authToken);
+          localStorage.setItem("role", credentials.role);
+          console.log("Role after login:", credentials.role);
+        } else {
+          alert("Invalid credentials or an error occurred");
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        alert("An error occurred while logging in");
+      });
   };
 
   const handleRoleChange = (e) => {
@@ -68,7 +70,7 @@ const Login = (props) => {
                 type="email"
                 name="email"
                 onChange={(e) =>
-                  setCredentials({ ...credentials, user_id: e.target.value })
+                  setCredentials({ ...credentials, email: e.target.value })
                 }
                 placeholder="id@email.com"
               />
@@ -81,7 +83,7 @@ const Login = (props) => {
                 type="Password"
                 name="password"
                 onChange={(e) =>
-                  setCredentials({ ...credentials, pass: e.target.value })
+                  setCredentials({ ...credentials, password: e.target.value })
                 }
                 placeholder="password"
               />

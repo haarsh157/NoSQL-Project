@@ -4,20 +4,25 @@ const { Schema } = mongoose;
 const UserSchema = new Schema({
   name: {
     type: String,
-    require: true,
+    required: true,
   },
   email: {
     type: String,
-    require: true,
+    required: true,
     unique: true,
   },
   password: {
     type: String,
-    require: true,
+    required: true,
   },
-  date: {
-    type: Date,
-    default: Date.now,
+  rollno: {
+    type: String,
+    required: true,
+  },
+  role: {
+    type: String,
+    enum: ["student", "caretaker"],
+    default: "student",
   },
 });
 

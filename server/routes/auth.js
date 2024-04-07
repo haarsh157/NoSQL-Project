@@ -16,10 +16,11 @@ router.post(
     body("name").isLength({ min: 3 }),
     body("email", "Enter a valid email").isEmail(),
     body("password", "Password must be 8 characters long").isLength({ min: 8 }),
+    body("rollno").notEmpty(),
   ],
   async (req, res) => {
     let success = false;
-    
+
     const errors = validationResult(req);
     //If there are errors return bad request and the errors
     if (!errors.isEmpty()) {
@@ -41,6 +42,8 @@ router.post(
         name: req.body.name,
         email: req.body.email,
         password: secPass,
+        rollno: req.body.rollno,
+        role: req.body.role,
       });
 
       const data = {
@@ -61,60 +64,63 @@ router.post(
   }
 );
 
-
 // ROUTE 1: Authenticating a user using : POST "/api/auth/login" - no login required
 router.post(
-    "/login",
-    [
-      //VALIDATIONS
-      body("email", "Enter a valid email").isEmail(),
-      body("password", "Password must be 8 characters long")
-        .isLength({ min: 8 })
-        .exists(),
-    ],
-    async (req, res) => {
-      let success = false;
-      const errors =  validationResult(req);
-      //If there are errors return bad request and the errors
-      if (!errors.isEmpty()) {
-        return res.status(400).send({ errors: errors.array() });
-      }
-  
-      //Destructuring email and password
-      const { email, password } = req.body;
-  
-      try {
-        //Finds user in the DB
-        let user = await User.findOne({ email });
-        if (!user) {
-          return res.status(400).json({ error: "Incorrect credentials!" });
-        } 
-  
-        //Compares the password entered by user and the hash of password in the DB
-        const passwordCompare = await bcrypt.compare(password, user.password);
-        if (!passwordCompare) {
-          success = false;
-          return res.status(400).json({ error: "Incorrect credentials!" });
-        }
-  
-        const data = {
-          user: {
-            id: user.id,
-          },
-        };
-        // jwt.sign(data, JWT_SECRET);
-        const authToken = jwt.sign(data, JWT_SECRET);
-        success = true;
-        // console.log(jwtData);
-  
-        // res.json(user);
-        res.json({ success, authToken });
-      } catch (error) {
-        console.log(error.message);
-        res.status(500).send("Internal server error!");
-      }
+  "/login",
+  [
+    // VALIDATIONS
+    body("email", "Enter a valid email").isEmail(),
+    body("password", "Password must be 8 characters long")
+      .isLength({ min: 8 })
+      .exists(),
+    body("role").isIn(["student", "caretaker"]), // Validate role
+  ],
+  async (req, res) => {
+    let success = false;
+    const errors = validationResult(req);
+    // If there are errors return bad request and the errors
+    if (!errors.isEmpty()) {
+      return res.status(400).send({ errors: errors.array() });
     }
-  );
-  
+
+    // Destructuring email, password, and role from the request body
+    const { email, password, role } = req.body;
+
+    try {
+      // Finds user in the DB
+      let user = await User.findOne({ email });
+      if (!user) {
+        return res.status(400).json({ error: "Incorrect credentials!" });
+      }
+
+      // Compares the password entered by user and the hash of password in the DB
+      const passwordCompare = await bcrypt.compare(password, user.password);
+      if (!passwordCompare) {
+        success = false;
+        return res.status(400).json({ error: "Incorrect credentials!" });
+      }
+
+      const data = {
+        user: {
+          id: user.id,
+        },
+      };
+      const authToken = jwt.sign(data, JWT_SECRET);
+      success = true;
+
+      // Navigate based on the role
+      if (role === "student") {
+        // Navigate to home
+        res.json({ success, authToken, role });
+      } else if (role === "caretaker") {
+        // Navigate to admin panel
+        res.json({ success, authToken, role });
+      }
+    } catch (error) {
+      console.log(error.message);
+      res.status(500).send("Internal server error!");
+    }
+  }
+);
 
 module.exports = router;
