@@ -4,13 +4,12 @@ const LeavesSchema = new mongoose.Schema({
   leave_id: {
     type: Number,
     require: true,
-    unique: true,
   },
   name: {
     type: String,
     require: true,
   },
-  roll_no: {
+  rollno: {
     type: String,
     require: true,
   },
@@ -56,10 +55,11 @@ const LeavesSchema = new mongoose.Schema({
   },
   permission: {
     type: String,
+    default: false,
     require: true,
   },
 });
 
 const Leave = mongoose.model("leaves", LeavesSchema);
-// Leave.createIndexes();
+Leave.createIndexes();
 module.exports = Leave;

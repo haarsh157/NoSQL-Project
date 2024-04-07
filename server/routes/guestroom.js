@@ -39,17 +39,17 @@ router.post(
       });
       if (check.length === 0) {
         await GuestRoom.create({
-          room_no: data.RoomNo,
-          name: data.Name,
-          gender: data.Gender,
-          relationship: data.Relationship,
+          room_no: data.room_no,
+          name: data.name,
+          gender: data.gender,
+          relationship: data.relationship,
           persons: data.NumberOfPersons,
-          permanentadd: data.PermanentAddress,
-          contactadd: data.ContactAddress,
-          phone: data.PhoneNo,
-          email: data.EmailId,
-          g_from: data.CheckIn,
-          g_upto: data.CheckOut,
+          permanentadd: data.permanentadd,
+          contactadd: data.contactadd,
+          phone: data.phone,
+          email: data.email,
+          g_from: data.g_from,
+          g_upto: data.g_upto,
         });
         res.send("Guest room booked!");
       } else {

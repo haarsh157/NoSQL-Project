@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import homeimg from "../../assets/svg/Home-white.png";
 import { faPen } from "@fortawesome/free-solid-svg-icons";
@@ -6,20 +6,26 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const ApplyLeave = () => {
-  const navigate = useNavigate();
+  let navigate = useNavigate();
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      navigate("/login");
+    }
+  }, []);
+
   const [newLeave, setNewLeave] = useState({
-    Name: "",
-    Roll_No: "",
-    Room_No: "",
-    Gender: "",
-    Program: "",
-    Branch: "",
-    Reason_for_leave: "",
-    From_: "",
-    Upto_: "",
-    Residential_Address: "",
-    Contact_No: "",
-    Contact_No_of_Parents: "",
+    name: "",
+    rollno: "",
+    room_no: "",
+    gender: "",
+    program: "",
+    branch: "",
+    reason: "",
+    l_from: "",
+    l_upto: "",
+    address: "",
+    contact_no: "",
+    contact_no_of_parents: "",
     Agreement: "",
   });
 
@@ -32,12 +38,7 @@ const ApplyLeave = () => {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/user/applyLeave",
-        {
-          newLeave,
-        },
-        {
-          withCredentials: true,
-        }
+        newLeave
       );
 
       console.log(response.data);
@@ -113,8 +114,8 @@ const ApplyLeave = () => {
                       <label htmlFor="Name">Name: </label>
                       <input
                         type="text"
-                        name="Name"
-                        id="Name"
+                        name="name"
+                        id="name"
                         style={{ borderRadius: "10px" }}
                         className="rounded-md w-[19.5rem] p-2 mx-1 text-black"
                         placeholder="Enter your name"
@@ -123,11 +124,11 @@ const ApplyLeave = () => {
                       />
                     </div>
                     <div className="rollno my-5">
-                      <label htmlFor="Roll_No">Roll No.: </label>
+                      <label htmlFor="rollno">Roll No.: </label>
                       <input
                         type="text"
-                        name="Roll_No"
-                        id="Roll_No"
+                        name="rollno"
+                        id="rollno"
                         className="rounded-md p-2 w-[12rem] mx-1 text-black"
                         placeholder="e.g. 22bcs001"
                         onChange={handleChange}
@@ -138,8 +139,8 @@ const ApplyLeave = () => {
                       <label htmlFor="Room_No">Room No.: </label>
                       <input
                         type="text"
-                        name="Room_No"
-                        id="Room_No"
+                        name="room_no"
+                        id="room_no"
                         className="rounded-md p-2 w-[9rem] mx-1 text-black"
                         placeholder="e.g. X-101"
                         onChange={handleChange}
@@ -149,10 +150,10 @@ const ApplyLeave = () => {
                   </div>
                   <div className="ge-pr-br flex justify-between flex-wrap">
                     <div className="gender my-5">
-                      <label htmlFor="Gender">Gender: </label>
+                      <label htmlFor="gender">gender: </label>
                       <select
-                        name="Gender"
-                        id="Gender"
+                        name="gender"
+                        id="gender"
                         className="rounded-md p-2 w-[15rem] text-black mx-1"
                         onChange={handleChange}
                         required
@@ -165,10 +166,10 @@ const ApplyLeave = () => {
                       </select>
                     </div>
                     <div className="program my-5">
-                      <label htmlFor="Program">Program: </label>
+                      <label htmlFor="program">program: </label>
                       <select
-                        name="Program"
-                        id="Program"
+                        name="program"
+                        id="program"
                         className="rounded-md p-2 w-[15rem] text-black mx-1"
                         onChange={handleChange}
                         required
@@ -182,15 +183,15 @@ const ApplyLeave = () => {
                       </select>
                     </div>
                     <div className="branch my-5">
-                      <label htmlFor="Branch">Branch: </label>
+                      <label htmlFor="branch">branch: </label>
                       <select
-                        name="Branch"
-                        id="Branch"
+                        name="branch"
+                        id="branch"
                         className="rounded-md p-2 w-[13rem] text-black mx-1"
                         onChange={handleChange}
                         required
                       >
-                        <option value="none">Select Branch</option>
+                        <option value="none">Select branch</option>
                         <option value="cse">CSE</option>
                         <option value="female">ECE</option>
                         <option value="female">Des</option>
@@ -202,12 +203,12 @@ const ApplyLeave = () => {
                     </div>
                   </div>
                   <div className="realea flex my-7">
-                    <label htmlFor="Reason_for_leave" className="me-2">
+                    <label htmlFor="reason" className="me-2">
                       Reason for leave:
                     </label>
                     <textarea
-                      name="Reason_for_leave"
-                      id="Reason_for_leave"
+                      name="reason"
+                      id="reason"
                       placeholder="Type reason here..."
                       className="rounded-md p-2 text-black w-[85%] mx-1"
                       onChange={handleChange}
@@ -220,23 +221,23 @@ const ApplyLeave = () => {
                     </label>
                     <div className="duratn flex flex-wrap max-md:justify-center">
                       <div className="ldfm md:mx-7 max-md:mx-2 max-md:my-3">
-                        <label htmlFor="From_">From </label>
+                        <label htmlFor="l_from">From </label>
 
                         <input
                           type="date"
-                          name="From_"
-                          id="From_"
+                          name="l_from"
+                          id="l_from"
                           className="rounded-md p-2 w-[12rem] text-black mx-1"
                           onChange={handleChange}
                           required
                         />
                       </div>
                       <div className="ldupto max-md:{my-2} max-md:mx-2">
-                        <label htmlFor="Upto_">Upto </label>
+                        <label htmlFor="l_upto">Upto </label>
                         <input
                           type="date"
-                          name="Upto_"
-                          id="Upto_"
+                          name="l_upto"
+                          id="l_upto"
                           className="rounded-md p-2 w-[12rem] text-black mx-1"
                           onChange={handleChange}
                           required
@@ -245,12 +246,12 @@ const ApplyLeave = () => {
                     </div>
                   </div>
                   <div className="realea flex my-9 me-2">
-                    <label htmlFor="Residential_Address" className="">
+                    <label htmlFor="address" className="">
                       Residential Address:
                     </label>
                     <textarea
-                      name="Residential_Address"
-                      id="Residential_Address"
+                      name="address"
+                      id="address"
                       placeholder="Enter address here..."
                       className="rounded-md p-2 text-black w-[85%] mx-1"
                       onChange={handleChange}
@@ -258,11 +259,11 @@ const ApplyLeave = () => {
                   </div>
                   <div className="mobno my-10 flex flex-wrap ">
                     <div className="name me-[20rem] flex max-md:items-center">
-                      <label htmlFor="Contact_No">Contact No.: </label>
+                      <label htmlFor="contact_no">Contact No.: </label>
                       <input
                         type="text"
-                        name="Contact_No"
-                        id="Contact_No"
+                        name="contact_no"
+                        id="contact_no"
                         className="rounded-md p-2 w-[14rem] text-black mx-1 max-md:h-[3rem] max-md:mx-4 max-md:items-center"
                         placeholder="Enter mobile no."
                         onChange={handleChange}
@@ -271,13 +272,13 @@ const ApplyLeave = () => {
                     </div>
 
                     <div className="contnopa max-md:my-6 ">
-                      <label htmlFor="Contact_No_of_Parents">
+                      <label htmlFor="contact_no_of_parents">
                         Contact No. of Parents:{" "}
                       </label>
                       <input
                         type="text"
-                        name="Contact_No_of_Parents"
-                        id="Contact_No_of_Parents"
+                        name="contact_no_of_parents"
+                        id="contact_no_of_parents"
                         className="rounded-md p-2 w-[14rem] text-black mx-1"
                         placeholder="Enter mobile no."
                         onChange={handleChange}

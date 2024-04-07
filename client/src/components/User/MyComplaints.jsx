@@ -79,7 +79,7 @@ const MyComplaints = () => {
         <div className="complaints lg:p-6 p-2 text-black lg:text-2xl flex items-center flex-col">
           {complaints.map((complaint) => (
             <div
-              key={complaint.complaint_id}
+              key={complaint._id}
               className="comp lg:w-[90%] w-[90%] bg-slate-300 rounded-[30px] lg:p-8 lg:px-14 p-4 px-7 py-4 my-3 flex justify-between items-center md:flex-row flex-col"
             >
               <div className="md:w-[60%] w-[100%] flex items-center ">
