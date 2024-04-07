@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 const ComplaintSchema = new Schema({
   complaint_id: {
     type: Number,
+    unique: true,
   },
   type: {
     type: String,
@@ -21,16 +22,21 @@ const ComplaintSchema = new Schema({
   },
   image: {
     type: String,
-    required: false, 
+    required: false,
   },
   date: {
     type: Date,
     default: Date.now,
   },
-  status: {
+  statusStaff: {
     type: String,
     default: "Pending",
-    enum: ["Pending", "Resolved", "Rejected"]
+    enum: ["Pending", "Resolved", "Rejected"],
+  },
+  statusStudent: {
+    type: String,
+    default: "Pending",
+    enum: ["Pending", "Resolved"],
   }
 });
 

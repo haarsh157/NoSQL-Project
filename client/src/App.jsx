@@ -32,13 +32,6 @@ function App() {
   };
   console.log(isOp);
 
-  // let navigate = useNavigate();
-  // useEffect(() => {
-  //   if (!localStorage.getItem("token")) {
-  //     navigate("/login");
-  //   }
-  // }, []);
-
   const [currentUserType, setCurrentUserType] = useState(
     localStorage.getItem("role")
   );
@@ -46,7 +39,6 @@ function App() {
   const handleRoleChange = (role) => {
     setCurrentUserType(role);
   };
-  // console.log(currentUserType);
 
   const UserElement = ({ children }) => {
     if (currentUserType === "student") {
@@ -77,13 +69,13 @@ function App() {
               minHeight: "calc(100vh-80px)",
             }}
           >
-            <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
-            {/* {currentUserType === "student" ? (
+            {currentUserType === "student" ? (
+            <SideNavUser isOpen={!isOp} setIsOp={setIsOp} /> 
             ) : currentUserType === "caretaker" ? (
               <SideNavAdmin isOpen={!isOp} setIsOp={setIsOp} />
             ) : (
               <SideNavUser isOpen={!isOp} setIsOp={setIsOp} />
-            )} */}
+            )}
 
             <Routes>
               <Route

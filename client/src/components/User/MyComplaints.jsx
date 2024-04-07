@@ -19,7 +19,6 @@ const MyComplaints = () => {
         const res = await axios.get(
           "http://localhost:4000/api/user/getcomplaints"
         );
-        // console.log(res.data);
         setComplaints(res.data);
       } catch (error) {
         console.error("Error fetching complaints:", error);
@@ -31,7 +30,9 @@ const MyComplaints = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete("http://localhost:4000/api/user/delcomplaint/" + id);
+      await axios.delete(
+        "http://localhost:4000/api/user/deletecomplaint/" + id
+      );
       window.location.reload();
     } catch (error) {
       console.log(error);
@@ -45,11 +46,22 @@ const MyComplaints = () => {
     } catch (error) {
       console.log(error);
     }
-    setCheckOffcolor("bg-green-500");
   };
+
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     return date.toLocaleDateString();
+  };
+
+  const formatTime = (dateString) => {
+    const date = new Date(dateString);
+    const options = {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: "2-digit",
+    };
+    const time = date.toLocaleTimeString(undefined, options);
+    return time;
   };
 
   return (
@@ -76,8 +88,8 @@ const MyComplaints = () => {
                   <p className="">Complaint Type:{complaint.type}</p>
                 </div>
                 <div className="flex items-center justify-center flex-col lg:px-10 px-6">
-                  <p className="">Date: {formatDate(complaint.date)}</p> 
-                  {/* <p className="">--:--:--</p> */}
+                  <p className="">Date: {formatDate(complaint.date)}</p>
+                  <p className="">Time: {formatTime(complaint.date)}</p>
                 </div>
                 <div className="flex items-center justify-center flex-col lg:px-10 px-6">
                   <p className="">{complaint.description}</p>
@@ -85,19 +97,21 @@ const MyComplaints = () => {
               </div>
               <div className="w-[40%] flex justify-center items-center lg:flex-row flex-row md:flex-col">
                 <button
-                  onClick={() => handleDelete(complaint.c_id)}
+                  onClick={() => handleDelete(complaint._id)}
                   className="del flex justify-center items-center bg-red-600 text-white rounded-3xl px-8 py-1 my-1 mx-6"
                 >
                   <span>Delete</span>
                 </button>
                 <button
-                  onClick={() => handleCheckoff(complaint.c_id)}
+                  onClick={() => handleCheckoff(complaint._id)}
                   className={`chkof ${
-                    complaint.stud_flag === 1 ? " bg-green-500" : "bg-blue-600"
+                    complaint.statusStudent === "done"
+                      ? " bg-green-500"
+                      : "bg-blue-600"
                   } flex justify-center items-center text-white rounded-3xl px-8 py-1 my-1 mx-6`}
                 >
                   <span>
-                    {complaint.stud_flag === 1 ? "DONE" : "Check Off"}
+                    {complaint.statusStudent === "done" ? "DONE" : "Check Off"}
                   </span>
                 </button>
               </div>

@@ -10,6 +10,7 @@ const Login = (props) => {
     role: "",
   });
   const navigate = useNavigate();
+  console.log(credentials)
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -21,7 +22,6 @@ const Login = (props) => {
           if (credentials.role === "student") {
             navigate("/");
           } else if (credentials.role === "caretaker") {
-            // Assuming admin is the caretaker
             navigate("/admin");
           }
           localStorage.setItem("token", res.data.authToken);
@@ -98,7 +98,7 @@ const Login = (props) => {
                 <option value="" disabled>
                   Select Role
                 </option>
-                <option value="admin">Caretaker</option>
+                <option value="caretaker">Caretaker</option>
                 <option value="student">Student</option>
                 <option value="worker">Worker</option>
               </select>
