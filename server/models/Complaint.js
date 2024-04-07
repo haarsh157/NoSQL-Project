@@ -6,7 +6,6 @@ const { Schema } = mongoose;
 const ComplaintSchema = new Schema({
   complaint_id: {
     type: Number,
-    unique: true,
   },
   type: {
     type: String,

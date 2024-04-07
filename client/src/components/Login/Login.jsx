@@ -10,7 +10,7 @@ const Login = (props) => {
     role: "",
   });
   const navigate = useNavigate();
-  console.log(credentials)
+  console.log(credentials);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,6 +26,7 @@ const Login = (props) => {
           }
           localStorage.setItem("token", res.data.authToken);
           localStorage.setItem("role", credentials.role);
+          localStorage.setItem("rollno", res.data.user.rollno);
           console.log("Role after login:", credentials.role);
         } else {
           alert("Invalid credentials or an error occurred");
@@ -53,14 +54,8 @@ const Login = (props) => {
       <div className="rounded-xl bg-gray-800 bg-opacity-40 px-12 py-10 shadow-lg backdrop-blur-md max-sm:px-8 md:w-[80%] w-[80%] xl:w-[50%] h-[70vh] flex justify-center items-center">
         <div className="text-white w-[70%] text-center flex justify-center items-center flex-col">
           <div className="mb-8 flex flex-col items-center">
-            <img
-              src="https://www.logo.wine/a/logo/Google/Google-Logo.wine.svg"
-              width="150"
-              alt=""
-              srcSet=""
-            />
-            <h1 className="mb-2 text-2xl">Login</h1>
-            <span className="text-gray-300">Enter Login Details</span>
+            <h1 className="mb-2 text-6xl font-extrabold">Login</h1>
+            <span className="text-gray-300 text-xl">Enter Login Details</span>
           </div>
           <form onSubmit={handleSubmit}>
             <div className="mb-4 text-lg">

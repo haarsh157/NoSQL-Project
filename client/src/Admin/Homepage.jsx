@@ -52,7 +52,7 @@ const Homepage = () => {
       <div className="md:w-[85vw] w-[100%] sticky left-[20vw] bg-gray-800 text-white lg:p-8 p-1">
         <div className="flex flex-wrap flex-row w-[100%] justify-center lg:justify-normal">
           <div className="h-[420px] p-10">
-            <Link to="/LeaveApproval">
+            <Link to="/admin/LeaveApproval">
               <div
                 className="max-w-sm rounded-[40px] overflow-hidden shadow-lg h-[100%] bg-white text-gray-800 min-w-[300px] flex justify-between items-center flex-col transition-all duration-300"
                 onMouseEnter={handleShadow1}
@@ -71,7 +71,7 @@ const Homepage = () => {
             </Link>
           </div>
           <div className="cards h-[420px] p-10">
-            <Link to="/Admin/GuestRoomRecords">
+            <Link to="/admin/GuestRoomRecords">
               <div
                 className=" max-w-sm rounded-[40px] overflow-hidden shadow-lg h-[100%] bg-white text-gray-800 min-w-[300px] flex justify-between items-center flex-col transition-all duration-300"
                 onMouseEnter={handleShadow2}
@@ -90,7 +90,7 @@ const Homepage = () => {
             </Link>
           </div>
           <div className="cards h-[420px] p-10">
-            <Link to="/Admin/ComplaintRecords">
+            <Link to="/admin/ComplaintRecords">
               <div
                 className=" max-w-sm rounded-[40px] overflow-hidden shadow-lg h-[100%] bg-white text-gray-800 min-w-[300px] flex justify-between items-center flex-col transition-all duration-300"
                 onMouseEnter={handleShadow3}
@@ -109,7 +109,7 @@ const Homepage = () => {
             </Link>
           </div>
           <div className="cards h-[420px]  p-10">
-            <Link to="/Admin/StudentRecords">
+            <Link to="/admin/StudentRecords">
               <div
                 className=" max-w-sm rounded-[40px] overflow-hidden shadow-lg h-[100%] bg-white text-gray-800 min-w-[300px] flex justify-between items-center flex-col transition-all duration-300"
                 onMouseEnter={handleShadow4}

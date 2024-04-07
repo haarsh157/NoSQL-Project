@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Complaint = require("../models/Complaint");
+const GuestRoom = require("../models/GuestRoomBook");
+const User = require("../models/Users");
 
 router.post("/checkoffcomplaint/:id", async (req, res) => {
   try {
@@ -25,12 +27,34 @@ router.post("/checkoffcomplaint/:id", async (req, res) => {
 
 router.get("/getcomplaints", async (req, res) => {
   try {
-    const notes = await Complaint.find();
+    const complaint = await Complaint.find();
 
-    res.json(notes);
+    res.json(complaint);
   } catch (error) {
     console.log(error.message);
     res.status(500).send("Some error occured");
+  }
+});
+
+router.get("/getrooms", async (req, res) => {
+  try {
+    const rooms = await GuestRoom.find();
+
+    res.json(rooms);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Some error occured");
+  }
+});
+
+router.get("/getstudents", async (req, res) => {
+  try {
+    const students = await User.find({ role: "student" });
+
+    res.json(students);
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send("Some error occurred");
   }
 });
 

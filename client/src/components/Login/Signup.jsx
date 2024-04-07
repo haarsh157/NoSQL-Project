@@ -41,6 +41,7 @@ const Signup = () => {
 
       localStorage.setItem("token", res.data.authToken);
       localStorage.setItem("role", credentials.role);
+      localStorage.setItem("rollno", res.data.rollno);
       navigate("/");
     } else {
       alert("Email already exists");

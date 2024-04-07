@@ -31,7 +31,6 @@ const FileComplaint = () => {
         "http://localhost:4000/api/user/newcomplaint",
         complaint
       );
-      // console.log(complaint);
       navigate("/mycomplaints");
     } catch (err) {
       console.log(err);
@@ -79,7 +78,6 @@ const FileComplaint = () => {
               className="px-6 py-4"
               style={{ fontSize: "x-large" }}
             >
-              <div>Complaint No. : XYZ123</div>
               <br />
               <div className="flex">
                 <div className="w-[50%]">

@@ -111,10 +111,10 @@ router.post(
       // Navigate based on the role
       if (role === "student") {
         // Navigate to home
-        res.json({ success, authToken, role });
+        res.json({ success, authToken, role, user });
       } else if (role === "caretaker") {
         // Navigate to admin panel
-        res.json({ success, authToken, role });
+        res.json({ success, authToken, role, user });
       }
     } catch (error) {
       console.log(error.message);

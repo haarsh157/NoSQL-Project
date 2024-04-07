@@ -107,18 +107,18 @@ function App() {
               <Route exact path="/guestroombook" Component={GuestRoomBook} />
               <Route exact path="/applyforleave" Component={ApplyLeave} />
               <Route exact path="/mycomplaints" Component={MyComplaints} />
-              <Route exact path="/LeaveApproval" Component={LeaveApproval} />
+              <Route exact path="/admin/LeaveApproval" Component={LeaveApproval} />
               <Route
                 exact
-                path="/GuestRoomRecords"
+                path="/admin/GuestRoomRecords"
                 Component={GuestRoomRecords}
               />
               <Route
                 exact
-                path="/ComplaintRecords"
+                path="/admin/ComplaintRecords"
                 Component={ComplaintRecords}
               />
-              <Route exact path="/StudentRecords" Component={StudentRecords} />
+              <Route exact path="/admin/StudentRecords" Component={StudentRecords} />
               <Route exact path="/admin" Component={Admin} />
               <Route exact path="*" Component={<div>Page not found</div>} />
             </Routes>

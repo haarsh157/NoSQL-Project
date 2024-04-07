@@ -15,6 +15,8 @@ const Navbar = (props) => {
 
   const handleLogout = () => {
     localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    localStorage.removeItem("rollno");
     navigate("/login");
     window.location.reload();
   };

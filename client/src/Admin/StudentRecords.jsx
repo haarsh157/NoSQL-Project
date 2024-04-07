@@ -7,8 +7,9 @@ const StudentRecords = () => {
   useEffect(() => {
     const fetchAllStudents = async () => {
       try {
-        const res = await axios.get("http://localhost:5000/admin/getstudents");
-        // console.log(res.data);
+        const res = await axios.get(
+          "http://localhost:4000/api/admin/getstudents"
+        );
         setstudents(res.data);
       } catch (error) {
         console.log("Error fetching students", error);
@@ -46,7 +47,7 @@ const StudentRecords = () => {
                 </th>
                 <th scope="col" className="px-6 py-3 text-3xl">
                   <div className="flex items-center">
-                    Room Number
+                    Roll Number
                     <a href="#">
                       <svg
                         className="w-3 h-3 ms-1.5"
@@ -84,17 +85,17 @@ const StudentRecords = () => {
             <tbody>
               {students.map((student) => (
                 <tr
-                  key={student.roll_no}
+                  key={student._id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 >
                   <th
                     scope="row"
                     className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                   >
-                    {student.roll_no}
+                    {student.rollno}
                   </th>
                   <td className="px-6 py-4">{student.name}</td>
-                  <td className="px-6 py-4">{student.room_no}</td>
+                  <td className="px-6 py-4">{student.rollno}</td>
                   <td className="px-6 py-4">{student.phone_no}</td>
                 </tr>
               ))}
