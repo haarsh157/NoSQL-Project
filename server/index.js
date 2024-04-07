@@ -20,6 +20,7 @@ app.use(
 app.use(express.json());
 
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/user", require("./routes/guestroom"))
 
 app.get("/", (req, res) => {
   res.send("Hello World!");
